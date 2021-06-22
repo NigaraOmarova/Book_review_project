@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_yasg',
     'ckeditor_uploader',
+    'category',
+    'book',
 ]
 
 MIDDLEWARE = [
