@@ -1,14 +1,13 @@
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
-from django.shortcuts import render
-from django.views import View
-from rest_framework import status
+from django.contrib.auth.views import LogoutView
+from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 from . import serializers
+from .permissions import IsAccountOwnerOrReadOnly
 from .send_mail import send_confirmation_email
 
 User = get_user_model()
@@ -42,6 +41,44 @@ class LoginApiView(TokenObtainPairView):
     serializer_class = serializers.LoginSerializer
 
 
+class CustomLogoutView(LogoutView):
+    """
+    Endpoint for logout from account
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    
+
+class UserListView(generics.ListAPIView):
+    """
+    Endpoint for retrieve all users
+    """
+    permission_classes = (permissions.AllowAny,)
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
 
 
+class UserDetailView(generics.RetrieveAPIView):
+    """
+    Endpoint for detail 1 user
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
 
+
+class UserUpdateView(generics.UpdateAPIView):
+    """
+    Endpoint for update account
+    """
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAccountOwnerOrReadOnly, )
+
+
+class UserDestroyView(generics.DestroyAPIView):
+    """
+    Endpoint for delete user
+    """
+    permission_classes = (IsAccountOwnerOrReadOnly,)
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
