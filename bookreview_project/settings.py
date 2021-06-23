@@ -40,13 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'user',
     'django_filters',
     'corsheaders',
     'drf_yasg',
     'ckeditor_uploader',
+
+    # custom apps
     'category',
     'book',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -91,8 +93,6 @@ DATABASES = {
         "PASSWORD": config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT', cast=int),
-
-
     }
 }
 
@@ -187,3 +187,16 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_Key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Token Authorization'
+        }
+    },
+    'USE_SESSION_AUTH': False
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
