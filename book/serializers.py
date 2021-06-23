@@ -1,26 +1,37 @@
 from rest_framework import serializers
 
-from book.models import BookReview
+from book.models import BookReview, Comment
 from category.serializers import CategorySerializer
 
 
-class BookImageSerializer(serializers.ModelSerializer):
+# class BookImageSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = BookReview
+#         exclude = ('id', )
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.email')
 
     class Meta:
-        model = BookReview
-        exclude = ('id', )
+        model = Comment
+        fields = ('id', 'body', 'owner', 'review')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.email')
-    comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    category = CategorySerializer(many=False, read_only=True)
-    images = BookImageSerializer(many=True, required=False)
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = BookReview
         fields = ('id', 'title', 'book_author',
-                  'review',  'owner', 'comments',
-                  'category', 'preview', 'images')
+                  'review',  'owner',
+                  'category', 'preview', 'image', 'comments')
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['category'] = CategorySerializer(many=False, instance=instance.category).data
+        return representation
 
 
