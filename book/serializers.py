@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from book.models import BookReview, Comment
+from book.models import BookReview, Comment, Favorites
 from category.serializers import CategorySerializer
 
 
@@ -35,3 +35,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         return representation
 
 
+class FavoritesSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.email')
+
+    class Meta:
+        model = Favorites
+        fields = ('review', 'favorites', 'owner',)
