@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_yasg',
     'ckeditor_uploader',
+    'rest_framework_simplejwt',
 
     # custom apps
     'category',
