@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     # custom apps
     'category',
     'book',
+
+    'like',
+    'rating',
+
     'user',
 ]
 

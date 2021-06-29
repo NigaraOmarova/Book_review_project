@@ -69,6 +69,11 @@ class FavoritesListView(generics.ListAPIView):
     serializer_class = serializers.FavoritesSerializer
     permission_classes = (permissions.IsAuthenticated, IsAccountOwnerOrReadOnly)
 
+    def get_queryset(self):
+        qs = self.request.user
+        queryset = Favorites.objects.filter(owner=qs, favorites=True)
+        return queryset
+
 
 class FavoritesCreateView(generics.CreateAPIView):
     serializer_class = serializers.FavoritesSerializer
