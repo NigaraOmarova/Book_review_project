@@ -31,7 +31,7 @@ class LoginSerializer(TokenObtainPairSerializer):  # Логика - после �
 
     def validate(self, attrs):
         email = attrs.get('email')
-        password = attrs.pop('password', None)
+        password = attrs.get('password', None)
         if not User.objects.filter(email=email).exists():
             raise serializers.ValidationError('User not found')
         user = authenticate(username=email, password=password)
@@ -40,3 +40,8 @@ class LoginSerializer(TokenObtainPairSerializer):  # Логика - после �
             attrs['refresh'] = str(refresh)
             attrs['access'] = str(refresh.access_token)
         return attrs
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'first_name', 'last_name', 'is_active', 'is_staff')

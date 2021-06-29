@@ -5,13 +5,13 @@ from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
 
 from book import serializers
-from book.models import BookReview, Comment
+from book.models import BookReview, Comment, Favorites
 
-from .permissions import IsReviewOwnerOrReadOnly
+from .permissions import IsReviewOwnerOrReadOnly, IsAccountOwnerOrReadOnly
 
 
 class StandardResultsPagination(PageNumberPagination):
-    page_size = 3
+    page_size = 1000
     page_size_query_param = 'page_size'
     max_page_size = 1000
 
@@ -62,4 +62,24 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsReviewOwnerOrReadOnly)
+
+
+class FavoritesListView(generics.ListAPIView):
+    queryset = Favorites.objects.all()
+    serializer_class = serializers.FavoritesSerializer
+    permission_classes = (permissions.IsAuthenticated, IsAccountOwnerOrReadOnly)
+
+
+class FavoritesCreateView(generics.CreateAPIView):
+    serializer_class = serializers.FavoritesSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class FavoritesDeleteView(generics.DestroyAPIView):
+    queryset = Favorites.objects.all()
+    serializer_class = serializers.FavoritesSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAccountOwnerOrReadOnly)
 

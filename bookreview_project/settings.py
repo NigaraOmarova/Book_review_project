@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-kfa*cohg%c4d7m_o&=hi+d+!7(toudjqr!_45d&05^b!i539a_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(' ')
 
 
 # Application definition
@@ -40,20 +40,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'user',
     'django_filters',
     'corsheaders',
     'drf_yasg',
     'ckeditor_uploader',
+    'rest_framework_simplejwt',
+
+    # custom apps
     'category',
     'book',
+
     'like',
     'rating',
+
+    'user',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -93,8 +99,6 @@ DATABASES = {
         "PASSWORD": config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT', cast=int),
-
-
     }
 }
 
@@ -189,3 +193,15 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'api_Key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Token Authorization'
+        }
+    },
+    'USE_SESSION_AUTH': False
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
