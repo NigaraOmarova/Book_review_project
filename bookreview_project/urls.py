@@ -23,6 +23,8 @@ urlpatterns = [
     path('api/v1/accounts/', include('user.urls')),
     path('api/v1/categories/', include('category.urls')),
     path('api/v1/', include('book.urls')),
+    path('api/v1/', include('like.urls')),
+    path('api/v1/', include('rating.urls'))
 ]
 
 

@@ -18,6 +18,8 @@ class BookReview(models.Model):
     book_author = models.CharField(max_length=255, null=True)
 
 
+
+
     class Meta:
         ordering = ('created_at',)
 
@@ -56,3 +58,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.owner}->{self.review}->{self.created_at}-{self.body[0:10]}"
+
