@@ -8,7 +8,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from . import serializers
 from .permissions import IsAccountOwnerOrReadOnly
-from .send_mail import send_confirmation_email
+from .send_mail import send_confirmation_email, send_reset_password
+from .serializers import CreateNewPasswordSerializer, PasswordResetApiSerializer
 
 User = get_user_model()
 
@@ -47,6 +48,29 @@ class CustomLogoutView(LogoutView):
     """
     permission_classes = (permissions.IsAuthenticated,)
     
+
+class PasswordResetApiView(APIView):
+    permission_classes = (permissions.IsAuthenticated, IsAccountOwnerOrReadOnly)
+
+    def post(self, request):
+        serializer = PasswordResetApiSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            user = User.objects.get(email=serializer.data.get('email'))
+            user.is_active = False
+            user.create_activation_code()
+            user.save()
+            send_reset_password(user)
+            return Response('Check your email', status=200)
+        return Response({'msg': 'User with this email does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class NewPasswordApiView(APIView):
+    def post(self, request):
+        serializer = CreateNewPasswordSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response('You have successfully changed password!', status=200)
+
 
 class UserListView(generics.ListAPIView):
     """
