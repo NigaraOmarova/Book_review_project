@@ -13,5 +13,7 @@ urlpatterns = [
     path('register/', views.RegisterApiView.as_view()),
     path('login/', views.LoginApiView.as_view()),
     path('activate/<uuid:activation_code>', views.ActivationView.as_view(), name='activation_code'),
-    path('refresh/', TokenRefreshView.as_view())
+    path('refresh/', TokenRefreshView.as_view()),
+    path('password_reset/', views.PasswordResetApiView.as_view()),
+    path('change_password/', views.NewPasswordApiView.as_view()),
 ]
