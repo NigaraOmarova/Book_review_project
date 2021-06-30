@@ -32,3 +32,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.owner}->{self.review}->{self.created_at}-{self.body[0:10]}"
+
+
+class Favorites(models.Model):
+    owner = models.ForeignKey(CustomUser, related_name='favorites', on_delete=models.CASCADE)
+    review = models.ForeignKey(BookReview, on_delete=models.CASCADE, related_name='favorites')
+    favorites = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ['owner', 'review']
