@@ -9,9 +9,9 @@ from django.conf import settings
 
 schema_view = get_schema_view(
     info=openapi.Info(
-        title='Blog project',
+        title='Book Review Project API',
         default_version='v1',
-        description='this is test blog project',
+        description='this is test Book Review Project',
         terms_of_service='http://www.google.com/policies/terms/',
         contact=openapi.Contact(email='test@gmail.com'),
         license=openapi.License(name='BSD License')

@@ -10,6 +10,4 @@ urlpatterns = [
     path('favorite/list/', views.FavoritesListView.as_view()),
     path('favorite/<int:pk>/delete/', views.FavoritesDeleteView.as_view()),
     path('favorite/create/', views.FavoritesCreateView.as_view()),
-
-
     ]

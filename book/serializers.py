@@ -2,8 +2,10 @@ from rest_framework import serializers
 
 from django.db.models import Avg
 from book.models import BookReview, Comment
+from category.models import Category
 
 from book.models import BookReview, Comment, Favorites
+
 from category.serializers import CategorySerializer
 from like.models import Like
 
@@ -15,8 +17,6 @@ from like.models import Like
 #         exclude = ('id', )
 from like.serializers import LikeSerializer
 from rating.models import Mark
-
-
 class CommentSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.email')
 
@@ -33,8 +33,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReview
         fields = ('id', 'title', 'book_author',
-                  'review',  'owner',
-                  'category', 'preview', 'image', 'comments')
+                  'review',  'owner', 'category', 'preview', 'image', 'comments')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
