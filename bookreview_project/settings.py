@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'ckeditor_uploader',
     'rest_auth',
-    'django_rest_passwordreset',
     'rest_framework_simplejwt',
 
     # custom apps
