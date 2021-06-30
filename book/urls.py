@@ -7,6 +7,4 @@ urlpatterns = [
     path('comments/', views.CommentListCreateView.as_view()),
     path('comments/<int:pk>/', views.CommentDetailView.as_view()),
     path('review/create/', views.BookReviewCreateView.as_view()),
-
-
     ]

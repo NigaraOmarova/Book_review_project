@@ -41,6 +41,7 @@ class LoginSerializer(TokenObtainPairSerializer):  # Логика - после �
             attrs['access'] = str(refresh.access_token)
         return attrs
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

@@ -4,6 +4,6 @@ from category import views
 
 urlpatterns = [
     path('list/', views.CategoryView.as_view()),
-    path('create/',views.CategoryCreateView.as_view()),
-    path('detail/<int:pk>', views.CategoryDetailView.as_view()),
+    path('create/', views.CategoryCreateView.as_view()),
+    path('detail/<str:pk>', views.CategoryDetailView.as_view()),
 ]

@@ -1,14 +1,8 @@
 from rest_framework import serializers
 
 from book.models import BookReview, Comment
+from category.models import Category
 from category.serializers import CategorySerializer
-
-
-# class BookImageSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = BookReview
-#         exclude = ('id', )
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -26,12 +20,9 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookReview
         fields = ('id', 'title', 'book_author',
-                  'review',  'owner',
-                  'category', 'preview', 'image', 'comments')
+                  'review',  'owner', 'category', 'preview', 'image', 'comments')
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['category'] = CategorySerializer(many=False, instance=instance.category).data
         return representation
-
-

@@ -33,7 +33,7 @@ class BookListCreateView(generics.ListCreateAPIView):
     serializer_class = serializers.ReviewSerializer
     pagination_class = StandardResultsPagination
     filter_backends = (filters.DjangoFilterBackend, SearchFilter)
-    filterset_fields = ('title', 'owner')
+    filterset_fields = ('category', 'owner')
     search_fields = ['title']
 
     def perform_create(self, serializer):
@@ -62,4 +62,3 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsReviewOwnerOrReadOnly)
-
