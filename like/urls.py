@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [
 
-    path('like/', views.LikeListView.as_view()),
-    path('like/create/', views.LikeCreateView.as_view()),
-    path('like/<int:pk>/delete/', views.LikeDeleteView.as_view()),
+    path('', views.LikeListView.as_view()),
+    path('create/', views.LikeCreateView.as_view()),
+    path('<int:pk>/delete/', views.LikeDeleteView.as_view()),
 
 ]

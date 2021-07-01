@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'like',
     'rating',
     'user',
+    'chatroom',
 ]
 
 MIDDLEWARE = [

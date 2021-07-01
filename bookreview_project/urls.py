@@ -27,8 +27,9 @@ urlpatterns = [
     path('api/v1/accounts/', include('user.urls')),
     path('api/v1/categories/', include('category.urls')),
     path('api/v1/', include('book.urls')),
-    path('api/v1/', include('like.urls')),
-    path('api/v1/', include('rating.urls'))
+    path('api/v1/like/', include('like.urls')),
+    path('api/v1/rating/', include('rating.urls')),
+    path('api/v1/chatroom/', include('chatroom.urls')),
 ]
 
 
