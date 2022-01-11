@@ -26,7 +26,7 @@ class RegisterApiSerializer(serializers.ModelSerializer):
         return user
 
 
-class LoginSerializer(TokenObtainPairSerializer):  # Логика - после регистрации, выдается токен
+class LoginSerializer(TokenObtainPairSerializer):  
     password = serializers.CharField(min_length=6, write_only=True)
 
     def validate(self, attrs):

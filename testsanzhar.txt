@@ -1,0 +1,12 @@
+http://34.89.166.252/swagger/
+http://34.89.166.252/api/v1/reviews/
+http://34.89.166.252/api/v1/review/2/
+http://34.89.166.252/api/v1/like/create/
+
+http://34.89.166.252/api/v1/rating/create/
+http://34.89.166.252/api/v1/accounts/register/
+http://34.89.166.252/api/v1/accounts/
+
+
+
+
